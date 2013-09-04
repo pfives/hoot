@@ -90,6 +90,9 @@ class HootTransportHttpUrlConnection implements HootTransport {
                 hootResult.setHeaders(connection.getHeaderFields());
                 hootResult.setResponseStream(new BufferedInputStream(connection
                         .getInputStream()));
+                if(request.isShouldStoreByteData()){
+                	hootResult.setByteArrayData(convertInputStreamToByteArray(connection.getInputStream()));
+                }
             } else {
                 hootResult.setResponseStream(new BufferedInputStream(connection
                         .getErrorStream()));

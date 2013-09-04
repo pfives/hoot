@@ -231,6 +231,14 @@ public class HootRequest {
         this.streamingMode = streamingMode;
         return this;
     }
+    
+    public boolean isShouldStoreByteData() {
+		return shouldStoreByteData;
+	}
+
+	public void setShouldStoreByteData(boolean shouldStoreByteData) {
+		this.shouldStoreByteData = shouldStoreByteData;
+	}
 
     public InputStream getPostDataStream(Map<String, String> queryParameters) {
         boolean isFirst = true;
@@ -326,6 +334,7 @@ public class HootRequest {
     private boolean mCancelled;
     private Class<?> mExpectedType;
     private int streamingMode;
+    private boolean shouldStoreByteData = false;
 
     HootRequest(Hoot hoot) {
         mHoot = hoot;

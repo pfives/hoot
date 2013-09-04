@@ -56,6 +56,10 @@ public class HootResult {
     public Object getDeserializedResult() {
         return mDeserializedResult;
     }
+    
+    public byte[] getByteArrayData(){
+    	return mByteArrayData;
+    }
 
     // -------------------------------------------------------------------------
     // END OF PUBLIC INTERFACE
@@ -72,6 +76,7 @@ public class HootResult {
     private Exception mException;
     private Map<String, List<String>> mHeaders;
     private InputStream mResponseStream;
+    private byte[] mByteArrayData;
     private HootDeserializer<?> mDeserializer;
     private Object mDeserializedResult;
 
@@ -105,6 +110,10 @@ public class HootResult {
 
     InputStream getResponseStream() {
         return mResponseStream;
+    }
+    
+    void setByteArrayData(byte[] byteArrayData){
+    	mByteArrayData = byteArrayData;
     }
 
     void deserializeResult(HootGlobalDeserializer globalDeserializer,
