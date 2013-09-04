@@ -18,7 +18,9 @@ package com.twotoasters.android.hoot;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
@@ -223,6 +225,18 @@ class HootTransportHttpUrlConnection implements HootTransport {
         // TODO handle other OP types
     }
 
+    private static byte[] convertInputStreamToByteArray(InputStream is) throws IOException{
+		BufferedInputStream bis = new BufferedInputStream(is);
+		ByteArrayOutputStream buf = new ByteArrayOutputStream();
+		int result = bis.read();
+		while(result !=-1){
+			byte b = (byte)result;
+			buf.write(b);
+			result = bis.read();
+		}
+		return buf.toByteArray();
+	}
+    
     private Map<HootRequest, HttpURLConnection> mConnectionMap =
             new HashMap<HootRequest, HttpURLConnection>();
 
