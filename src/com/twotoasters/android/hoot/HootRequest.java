@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -245,7 +246,7 @@ public class HootRequest {
         StringBuffer sb = new StringBuffer();
         for (String key : queryParameters.keySet()) {
             appendIfNotNullOrEmpty(sb, isFirst ? null : "&");
-            sb.append(key).append('=').append(queryParameters.get(key));
+            sb.append(encodeValue(key)).append('=').append(encodeValue(queryParameters.get(key)));
             isFirst = false;
         }
 
@@ -420,10 +421,20 @@ public class HootRequest {
             Iterator<Entry<String, String>> iter = mQueryParameters.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, String> entry = iter.next();
-                builder.appendQueryParameter(entry.getKey(), entry.getValue());
+                builder.appendQueryParameter(encodeValue(entry.getKey()), encodeValue(entry.getValue()));
             }
         }
         return builder.build();
+    }
+    
+    private String encodeValue(String value){
+    	String encoded = "";
+    	try {
+			encoded = URLEncoder.encode(value, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+    	return encoded;
     }
 
     void deserializeResult() throws IOException {
